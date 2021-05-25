@@ -16,7 +16,7 @@
 				var lon = position.coords.longitude;
 				var mapContainer = document.getElementById('map'); // 지도를 표시할 div
 				var mapOption = {
-					center: new kakao.maps.Lating(lat, lon), //지도의 중심좌표(현재위치)
+					center: new kakao.maps.LatLng(lat, lon), //지도의 중심좌표(현재위치)
 					level: 3 //지도의 확대레벨
 				};
 
