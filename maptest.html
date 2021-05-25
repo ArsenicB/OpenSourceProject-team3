@@ -8,7 +8,7 @@
 <body>
 	<div>사이트 동작확인</div>
 
-	<div id="map" sytle="width:80%;height:500px;"></div>
+	<div id="map" sytle="width:500px;height:500px;"></div>
 	<script>
 		navigator.geolocation.getCurrentPosition(
 			function(position){
@@ -19,7 +19,6 @@
 					center: new kakao.maps.LatLng(lat, lon), //지도의 중심좌표(현재위치)
 					level: 3 //지도의 확대레벨
 				};
-
 				var map = new kakao.maps.Map(mapContainer, mapOption);
 			}
 		);
