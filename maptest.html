@@ -8,13 +8,12 @@
 <body>
 	<div>사이트 동작확인</div>
 
-	<div id="map" sytle="width:80% height 500px;"></div>
+	<div id="map" sytle="width:80%;height:500px;"></div>
 	<script>
 		navigator.geolocation.getCurrentPosition(
 			function(position){
 				var lat = position.coords.latitude;
 				var lon = position.coords.longitude;
-
 				var mapContainer = document.getElementById('map'); // 지도를 표시할 div
 				var mapOption = {
 					center: new kakao.maps.Lating(lat, lon), //지도의 중심좌표(현재위치)
