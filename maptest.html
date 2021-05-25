@@ -6,43 +6,27 @@
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=23256411488e7efe828c636cc4c08115"></script>
 </head>
 <body>
-	<input type="button" value="지도확인버튼" onclick="getlocation();">
+
 
 	<div id="map" sytle="width:500px;height:500px;"></div>
 <script>
-function getlocation(){
-	if(navigator.geolocation){
-		navigator.geolocation.getCurrentPosition(showPos,showErr);
-	}else{
-		alert("your browser does not support this api")
-	}
+if(navigator.geolocation){
+	navigator.geolocation.getCurrentPosition(function(position)){
+		var lat = position.coords.latitude, // 위도
+				lon = position.coords.longitude; // 경도
+
+		var location = new kakao.maps.LatLng(lat, lon);
+
+		var con = document.getElementById('map');
+		var opt = {
+			center: location,
+			level: 5
+		};
+		var map = new kakao.maps.Map(con,opt);
+
+
+	})
 }
-function showPos(position){
-	lat = position.coords.latitude;
-	lng = position.coords.longitude;
-	var container = document.getElementById('map');
-	var option = {
-					center: new kakao.maps.LatLng(lat, lng), // 지도의 중심좌표
-					level: 3, // 지도의 확대 레벨
-			};
-	var map = new kakao.maps.Map(container, option);
-}
-function showErr(error) {
-						switch(error.code){
-						case error.PERMISSION_DENIED:
-					 alert("User denied the request for Geolocation API.");
-						break;
-					 case error.POSITION_UNAVAILABLE:
-					 alert("USer location information is unavailable.");
-					break;
-					case error.TIMEOUT:
-					alert("The request to get user location timed out.");
-					break;
-				 case error.UNKNOWN_ERROR:
-					alert("An unknown error occurred.");
-					break;
-				 }
-			}
 </script>
 
 
