@@ -26,25 +26,12 @@
 						lon = position.coords.longitude; // 경도
 
 				var location = new kakao.maps.LatLng(lat, lon);
-				var markerPosition = new kakao.maps.LatLng(lat, lon);
-
-				// 마커를 생성합니다
-				var marker = new kakao.maps.Marker({
-					position: markerPosition
-				});
-
-				// 마커가 지도 위에 표시되도록 설정합니다
-				marker.setMap(map);
+				map.setCenter(location);
 			});
 		} else { // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
+    var locPosition = new kakao.maps.LatLng(33.450701, 126.570667);
+		map.setCenter(locPosition);
 
-    var locPosition = new kakao.maps.LatLng(33.450701, 126.570667),
-        message = 'geolocation을 사용할수 없어요..'
-
-				var marker = new kakao.maps.Marker({
-		        map: map,
-		        position: locPosition
-		    });
 }
 	</script>
 
