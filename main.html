@@ -5,29 +5,37 @@
 		<meta charset="UTF-8">
 		<title>main page</title>
 		<link rel="stylesheet" type="text/css" href="main_css.css">
+		<!--카카오맵 API 호출-->
+		<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=23256411488e7efe828c636cc4c08115"></script>
+		<!--지도 제어 javascript-->
+		<script src="mainmapcontrol.js"></script>
 	</head>
 
 	<body>
-	<div class = "mainpage">
-	  <div id = "header">
-	   <h1> 관광 및 날씨 정보 <h1>
-	  </div>
-	  
-	 
-	 <div id = "section1">
-     <input type="text" placeholder="검색어를 입력해주세요.">
-     <button>검색</button>
-	</div>
-	  
-	  <div id ="footer">
-    
-      <h1 style="font-size:70%">
-      <p>오픈소스 프로젝트 3조</p>
-    </h1>
-  
-  
-    </div>
-	 </div>
+		<div class="mainpage">
+			<div id="header">
+				<h1> 관광 및 날씨 정보 <h1>
+			</div>
+
+
+			<div id="section1">
+				<input type="text" placeholder="검색어를 입력해주세요.">
+				<button>검색</button>
+			</div>
+
+			<p id="err"></p>
+			<div id="map" style="width:100%;height:500px;"></div>
+
+
+			<div id="footer">
+
+				<h1 style="font-size:70%">
+					<p>오픈소스 프로젝트 3조</p>
+				</h1>
+
+
+			</div>
+		</div>
 	</body>
 
 	</html>
