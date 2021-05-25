@@ -37,7 +37,7 @@
 			// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
 			var map = new kakao.maps.Map(mapContainer, mapOption);
 			if(navigator.geolocation){
-				navigator.geolocation.getCurrentPosition(function(positon){
+				navigator.geolocation.getCurrentPosition(function(position){
 					var lat = position.coords.latitude, //위도
 							lon = position.coords.longitude; //경도
 					var location = kakao.maps.LatLng(lat, lon); //현재 위치의 좌표값을 가진 장소 지정
