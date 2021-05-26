@@ -9,7 +9,7 @@ if(navigator.geolocation){
   navigator.geolocation.getCurrentPosition(function(positon){
     var lat = position.coords.latitude, //위도
         lon = position.coords.longitude; //경도
-    var location = kakao.maps.LatLng(lat, lon); //현재 위치의 좌표값을 가진 장소 지정
+    var location = new kakao.maps.LatLng(lat, lon); //현재 위치의 좌표값을 가진 장소 지정
     map.setCenter(location);
   });
 }else{
