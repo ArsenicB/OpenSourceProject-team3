@@ -44,7 +44,8 @@
 					if (this.readyState == 4) {
 						var obj = JSON.parse(this.responseText);
 						var positions = new Array(); //지도 상에 표시할 마커들의 이름과 좌표값이 들어가는 배열
-						var count = obj.response.body.totalCount;
+						alert(obj.response.header.resultCode);
+						//var count = obj.response.body.totalCount;
 						var i = 0;
 						while (i < count) {
 							position.push({
