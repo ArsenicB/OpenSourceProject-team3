@@ -26,30 +26,25 @@
 				};
 				var map = new kakao.maps.Map(container, option);
 
-				var userURL = "https://arsenicb.github.io/OpenSourceProject-team3/maptest.html"
-				var url = userURL + "/AjaxRequest.jsp?getUrl=";
+
 				var xhr = new XMLHttpRequest();
-				var suburl = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/locationBasedList'; /*API 호출 주소*/
+				var url = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/locationBasedList'; /*API 호출 주소*/
 				var queryParams = '?' + encodeURIComponent('ServiceKey') + '=' + 'Qmxlp4pFKUj9NMkhZTxOAlYfvf2Jk%2BPbu3nT8soq5iibgzkV92lHdPtbQw0CVBy2qLBz3fxYUdRJkXlBCETe2g%3D%3D'; /*API 호출 키*/
 				queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('100'); /*한번에 불러오는 데이터의 양*/
-				queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /**/
-				queryParams += '&' + encodeURIComponent('MobileOS') + '=' + encodeURIComponent('ETC'); /**/
-				queryParams += '&' + encodeURIComponent('MobileApp') + '=' + encodeURIComponent('AppTest'); /**/
-				queryParams += '&' + encodeURIComponent('arrange') + '=' + encodeURIComponent('A'); /**/
+				queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /*페이지 번호*/
+				queryParams += '&' + encodeURIComponent('MobileOS') + '=' + encodeURIComponent('ETC'); /*사용하는 OS*/
+				queryParams += '&' + encodeURIComponent('MobileApp') + '=' + encodeURIComponent('AppTest'); /*프로그램 명*/
+				queryParams += '&' + encodeURIComponent('arrange') + '=' + encodeURIComponent('A'); /*정렬기준*/
 				queryParams += '&' + encodeURIComponent('contentTypeId') + '=' + encodeURIComponent('12'); /**/
-				queryParams += '&' + encodeURIComponent('mapX') + '=' + lon; /**/
-				queryParams += '&' + encodeURIComponent('mapY') + '=' + lat; /**/
-				queryParams += '&' + encodeURIComponent('radius') + '=' + encodeURIComponent('1000'); /**/
-				queryParams += '&' + encodeURIComponent('listYN') + '=' + encodeURIComponent('Y'); /**/
-				/*queryParams += '&' + encodeURIComponent('_type') + '=' + encodeURIComponent('json'); */
-
-				url = url+suburl+queryParams;
-				xhr.open('GET', url);
+				queryParams += '&' + encodeURIComponent('mapX') + '=' + lon; /*경도*/
+				queryParams += '&' + encodeURIComponent('mapY') + '=' + lat; /*위도*/
+				queryParams += '&' + encodeURIComponent('radius') + '=' + encodeURIComponent('1000'); /*범위 (m단위)*/
+				queryParams += '&' + encodeURIComponent('listYN') + '=' + encodeURIComponent('Y'); /*리스트화 여부 N일시 페이지 수 반환*/
+				queryParams += '&' + encodeURIComponent('_type') + '=' + encodeURIComponent('json'); /*JSON형태의 데이터로 호출*/
+				xhr.open('GET', url+queryParams);
 				xhr.onreadystatechange = function() {
 					if (this.readyState == 4) {
-						var xml2json = new XMLtoJSON();
-						var xobj = xml2json.fromStr(this.reponseText)
-						var obj = JSON.parse(xobj);
+						var obj = JSON.parse(this.responseText);
 						var positions = new Array(); //지도 상에 표시할 마커들의 이름과 좌표값이 들어가는 배열
 						var myJSON = JSON.stringify(obj);
 						document.getElementById("link").innerHTML = myJSON;
