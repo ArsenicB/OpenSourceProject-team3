@@ -40,7 +40,7 @@
 				queryParams += '&' + encodeURIComponent('listYN') + '=' + encodeURIComponent('Y'); /**/
 				queryParams += '&' + encodeURIComponent('_type') + '=' + encodeURIComponent('json'); /**/
 				xhr.open('GET', url + queryParams);
-				document.write(url+queryparams);
+				document.write(url+queryParams);
 				xhr.onreadystatechange = function() {
 					if (this.readyState == 4) {
 						var obj = JSON.parse(this.responseText);
