@@ -42,7 +42,7 @@
 				queryParams += '&' + encodeURIComponent('listYN') + '=' + encodeURIComponent('Y'); /**/
 				queryParams += '&' + encodeURIComponent('_type') + '=' + encodeURIComponent('json'); /**/
 
-				url += encodeURIComponent(suburl);
+				url += encodeURIComponent(suburl+queryParams);
 				xhr.open('GET', url);
 				xhr.onreadystatechange = function() {
 					if (this.readyState == 4) {
