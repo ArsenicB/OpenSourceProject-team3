@@ -35,16 +35,17 @@
 				queryParams += '&' + encodeURIComponent('arrange') + '=' + encodeURIComponent('A'); /**/
 				queryParams += '&' + encodeURIComponent('contentTypeId') + '=' + encodeURIComponent('12'); /**/
 				queryParams += '&' + encodeURIComponent('mapX') + '=' + encodeURIComponent(lon); /**/
-				queryParams += '&' + encodeURIComponent('mapY') + '=' + encodeURIComponent(lat); /**/
+				queryParams += '&' + encodeURIComponent('mapY') + '=' + lat; /**/
 				queryParams += '&' + encodeURIComponent('radius') + '=' + encodeURIComponent('1000'); /**/
 				queryParams += '&' + encodeURIComponent('listYN') + '=' + encodeURIComponent('Y'); /**/
 				queryParams += '&' + encodeURIComponent('_type') + '=' + encodeURIComponent('json'); /**/
 				xhr.open('GET', url + queryParams);
+				document.write(url+queryparams);
 				xhr.onreadystatechange = function() {
 					if (this.readyState == 4) {
 						var obj = JSON.parse(this.responseText);
 						var positions = new Array(); //지도 상에 표시할 마커들의 이름과 좌표값이 들어가는 배열
-						alert(obj.response.header.resultCode);
+						//alert(obj.response.header.resultCode);
 						//var count = obj.response.body.totalCount;
 						var i = 0;
 						while (i < count) {
