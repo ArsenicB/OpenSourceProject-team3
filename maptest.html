@@ -5,6 +5,7 @@
 	<meta charset="utf-8" />
 	<title>Kakao 지도 시작하기</title>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=23256411488e7efe828c636cc4c08115"></script>
+	<script type="text/javascript" src="<c:url value="/resources/js/xml2json.js" />"></script>
 </head>
 
 <body>
@@ -40,13 +41,15 @@
 				queryParams += '&' + encodeURIComponent('mapY') + '=' + lat; /**/
 				queryParams += '&' + encodeURIComponent('radius') + '=' + encodeURIComponent('1000'); /**/
 				queryParams += '&' + encodeURIComponent('listYN') + '=' + encodeURIComponent('Y'); /**/
-				queryParams += '&' + encodeURIComponent('_type') + '=' + encodeURIComponent('json'); /**/
+				/*queryParams += '&' + encodeURIComponent('_type') + '=' + encodeURIComponent('json'); */
 
 				url += encodeURIComponent(suburl+queryParams);
 				xhr.open('GET', url);
 				xhr.onreadystatechange = function() {
 					if (this.readyState == 4) {
-						var obj = JSON.parse(this.responseText);
+						var xml2json = new XMLtoJSON();
+						var xobj = xml2json.fromStr(this.reponseText)
+						var obj = JSON.parse(xobj);
 						var positions = new Array(); //지도 상에 표시할 마커들의 이름과 좌표값이 들어가는 배열
 						var myJSON = JSON.stringify(obj);
 						document.getElementById("link").innerHTML = myJSON;
