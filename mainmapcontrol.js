@@ -43,9 +43,13 @@ function weatherReport(){
   /*데이터 파싱*/
   xhr.responseType='json';
   xhr.onload = function () {
-    var data = xhr.response;
-    var popData = data.body.items.item[2].fcstValue;
-  }
+    var data = xhr.response.response.body.items.item;
+    for(var i =0; i<data.length; i++){
+      if(data[i].category == "SKY" || data[i].category == "TMN" || data[i].category == "TMX"){
+        var popData = data.body.items.item[i].fcstValue;
+      }
+    }
+  };
 
 }
 /*
@@ -57,6 +61,7 @@ function weatherReport(){
 xhr.send('');
 }
 
+/*날짜 받아오는 함*/
 function makeDate(){
   var d = new Date();
   var n;
