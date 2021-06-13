@@ -27,13 +27,14 @@ kakao.maps.event.addListener(map, 'dragend', function(){
 });
 
 function weatherReport(){
+  var today = makeDate();
   var xhr = new XMLHttpRequest();
   var url = 'http://apis.data.go.kr/1360000/VilageFcstInfoService/getUltraSrtNcst'; /*URL*/
   var queryParams = '?' + encodeURIComponent('ServiceKey') + '='+'15DREnV4%2FzTzQocDLJr05cb05qioRq3nUCYxAeeMu9BCBPvNaCWgLuLQAMLKlYRnwBJhjwCShKH0jqk8gnflbA%3D%3D'; /*Service Key*/
   queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /**/
   queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('10'); /**/
   queryParams += '&' + encodeURIComponent('dataType') + '=' + encodeURIComponent('JSON'); /**/
-  queryParams += '&' + encodeURIComponent('base_date') + '=' + encodeURIComponent('20210604'); /**/
+  queryParams += '&' + encodeURIComponent('base_date') + '=' + encodeURIComponent(today); /**/
   queryParams += '&' + encodeURIComponent('base_time') + '=' + encodeURIComponent('0500'); /**/
   queryParams += '&' + encodeURIComponent('nx') + '=' + encodeURIComponent('61'); /**/
   queryParams += '&' + encodeURIComponent('ny') + '=' + encodeURIComponent('110'); /**/
@@ -44,10 +45,9 @@ function weatherReport(){
   xhr.onload = function () {
     var data = xhr.response;
     var popData = data.body.items.item[2].fcstValue;
-    var
   }
 
-};
+}
 /*
 1. 날짜와 시간 불러오는 코드 만들기
 2. 받아온 날씨 정보를 어디에 띄워야 하는가
@@ -57,6 +57,19 @@ function weatherReport(){
 xhr.send('');
 }
 
+function makeDate(){
+  var d = new Date();
+  var n;
+  var returnDate;
+  if(d.getMonth()<9){
+    n = d.getFullYear()+'0'+(d.getMonth()+1)+''+d.getDate();
+  }
+  else{
+    n = d.getFullYear()+''+(d.getMonth()+1)+''+d.getDate();
+  }
+  returnDate = n;
+  return returnDate;
+};
 
 function tourapicall(lat, lon){
   var xhr = new XMLHttpRequest();
