@@ -98,7 +98,7 @@ function tourapicall(lat, lon) {
       var markerData = {
         title: obj.item[i].title,
         latlng: new kakao.maps.LatLng(obj.item[i].mapy, obj.item[i].mapx),
-        content: '<div>' + obj.item[i].title + '</div>'
+        content: '<div>' + obj.item[i].title +'<br>'+obj.item[i].addr1+ '</div>'
       };
       positions.push(markerData);
       i++;
