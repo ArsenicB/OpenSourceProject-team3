@@ -23,7 +23,7 @@ kakao.maps.event.addListener(map, 'dragend', function() {
   var lat = latlng.getLat();
   var lon = latlng.getLng();
   tourapicall(lat, lon);
-  //eatherReport();
+  weatherReport(lat, lon);
 });
 
 function weatherReport() {
@@ -34,17 +34,33 @@ function weatherReport() {
   queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /**/
   queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('10'); /**/
   queryParams += '&' + encodeURIComponent('dataType') + '=' + encodeURIComponent('JSON'); /**/
-  queryParams += '&' + encodeURIComponent('base_date') + '=' + encodeURIComponent(today); /**/
+  queryParams += '&' + encodeURIComponent('base_date') + '=' + today; /**/
   queryParams += '&' + encodeURIComponent('base_time') + '=' + encodeURIComponent('0500'); /**/
-  queryParams += '&' + encodeURIComponent('nx') + '=' + encodeURIComponent('61'); /**/
-  queryParams += '&' + encodeURIComponent('ny') + '=' + encodeURIComponent('110'); /**/
+  queryParams += '&' + encodeURIComponent('nx') + '=' + lat; /**/
+  queryParams += '&' + encodeURIComponent('ny') + '=' + lon; /**/
   xhr.open('GET', url + queryParams);
 
   /*데이터 파싱*/
   xhr.responseType = 'json';
   xhr.onload = function() {
-    var data = xhr.response;
-    var popData = data.body.items.item[2].fcstValue;
+    var data = xhr.response.response.body.items.item;
+    for(var i =0; i<data.length; i++){
+      if(){
+        if(data[i].category == "SKY") {
+          var popData = data.body.items.item[i].fcstValue;
+        }
+        else if(data[i].category == "TMN"){
+          var leaveData = data.body.items.item[i].fcstValue;
+        }
+        else if(data[i].category == "TMX"){
+          var thisData = data.body.items.item[i].fcstValue;
+        }
+      }
+      else{
+
+      }
+
+    }
   }
   /*
   1. 날짜와 시간 불러오는 코드 만들기
