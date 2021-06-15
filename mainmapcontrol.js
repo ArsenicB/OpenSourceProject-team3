@@ -28,6 +28,9 @@ kakao.maps.event.addListener(map, 'dragend', function() {
   weatherReport(lat, lon);
 });
 
+tourkeyword("광화문");
+tourkeyword("현충사");
+
 function weatherReport(lat, lon) {
   var today = makeDate();
   var xhr = new XMLHttpRequest();
@@ -176,6 +179,71 @@ function tourapicall(lat, lon) {
       }
     }
   }
+
+xhr.send('');
+}
+
+function tourkeyword(keyword){
+  var xhr = new XMLHttpRequest();
+var url = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/searchKeyword'; /*URL*/
+var queryParams = '?' + encodeURIComponent('ServiceKey') + '='+'Qmxlp4pFKUj9NMkhZTxOAlYfvf2Jk%2BPbu3nT8soq5iibgzkV92lHdPtbQw0CVBy2qLBz3fxYUdRJkXlBCETe2g%3D%3D'; /*Service Key*/
+queryParams += '&' + encodeURIComponent('MobileApp') + '=' + encodeURIComponent('AppTest'); /**/
+queryParams += '&' + encodeURIComponent('MobileOS') + '=' + encodeURIComponent('ETC'); /**/
+queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /**/
+queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('10'); /**/
+queryParams += '&' + encodeURIComponent('listYN') + '=' + encodeURIComponent('Y'); /**/
+queryParams += '&' + encodeURIComponent('arrange') + '=' + encodeURIComponent('A'); /**/
+queryParams += '&' + encodeURIComponent('contentTypeId') + '=' + encodeURIComponent('12'); /**/
+queryParams += '&' + encodeURIComponent('keyword') + '=' + encodeURIComponent(keyword); /**/
+queryParams += '&' + encodeURIComponent('_type') + '=' + encodeURIComponent('json'); /*JSON형태의 데이터로 호출*/
+xhr.open('GET', url + queryParams);
+xhr.responseType = 'json';
+xhr.onload = function() {
+  var path;
+  if(xhr.response.response.body.totalCount === 1){
+    path = xhr.response.response.body.items.item;
+  }else{
+    path = xhr.response.response.body.items.item[0];
+  }
+
+  var marker = new kakao.maps.Marker({
+    map: map, // 마커를 표시할 지도
+    position: new kakao.maps.LatLng(path.mapy, path.mapx), // 마커를 표시할 위치
+    title: path.title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+  });
+  var infowindow = new kakao.maps.InfoWindow({
+    content: '<div>'+path.title+'<br>'+path.addr1+'</div>'
+  });
+  kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+  kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+  kakao.maps.event.addListener(marker, 'click', clickListner());
+
+  //인포윈도우를 여는 함수
+  function makeOverListener(map, marker, infowindow) {
+    return function() {
+      infowindow.open(map, marker);
+    };
+  }
+  //인포윈도우를 닫는 함수
+  function makeOutListener(infowindow) {
+    return function() {
+      infowindow.close();
+    };
+  }
+
+  function clickListner(){
+    return function() {
+      var overlay = document.getElementById('overlay');
+      overlay.style.display = "block";
+      var overlaypage = document.getElementById('overlaypage');
+      if(path.title === "현충사"){
+        overlaypage.innerHTML = '<iframe src="info_page.html" width="100%" height="600px" seamless></iframe';
+      }else if(path.title === "광화문"){
+        overlaypage.innerHTML = '<iframe src="info_gwanghwamoon.html" width="80%" height="70%" seamless></iframe';
+      }
+    }
+  }
+};
 
 xhr.send('');
 }
