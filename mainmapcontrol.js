@@ -262,17 +262,17 @@ function areaSearch() {
     sigungu = selectsigungu.options[selectsigungu.selectedIndex].value;
   }
 
-alert(address);
   /*지도 중심좌표 변경*/
   var geocoder = new kakao.maps.services.Geocoder();
   geocoder.addressSearch(address, function(result, status) {
     if (status === kakao.maps.services.Status.OK) {
       var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+      map.setLevel(7);
       map.setCenter(coords);
     }
   });
   areaapicall(selectarea.options[selectarea.selectedIndex].value, sigungu);
-  map.setLevel(8);
+
 
 }
 
