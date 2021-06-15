@@ -13,6 +13,7 @@ if (navigator.geolocation) { //브라우저가 위치정보 제공을 지원할�
     var location = new kakao.maps.LatLng(lat, lon); //현재 위치의 좌표값을 가진 장소 지정
     map.setCenter(location);
     tourapicall(lat, lon)
+    weatherReport(lat, lon);
   });
 } else {
   location = new kakao.maps.LatLng(33.450701, 126.570667);
@@ -52,7 +53,9 @@ function weatherReport(lat, lon) {
     var d = new Date();
     var thisMonth = d.getMonth();
     var thisDate = d.getDate();
+    var printWeather;
     viewText = '<div>' + thisMonth + '/'+thisDate '</div>';
+    console.log(data);
     for(var i =0; i<data.length; i++){
       if((data[i].category == "SKY") && (data[i].fcstTime == 1200)){
         sktData = data[i].fcstValue;
@@ -65,19 +68,19 @@ function weatherReport(lat, lon) {
       }
     }
     if(skyData == 1){
-      viewText = viewText + '<img src= "sunny.jpg" alt="ERROR" width="150">';
-      var printWeather = viewText + '<div>' + tmnData +'℃'+'/'+tmxData+'℃'+'</div>';
+      viewText = viewText + '<img id = "w_info" src= "D://open_source//sunny.jpg" alt="ERROR" width="150">';
+      printWeather = viewText + '<div>' + tmnData +'℃'+'/'+tmxData+'℃'+'</div>';
 
     }
     else if(skyData == 3){
-      viewText = viewText + '<img src = "cloudy.jpg" alt="ERROR" width="150">';
-      var printWeather = viewText + '<div>' + tmnData +'℃'+'/'+tmxData+'℃'+'</div>';
+      viewText = viewText + '<img id = "w_info" src = "D://open_source//cloudy.jpg" alt="ERROR" width="150">';
+      printWeather = viewText + '<div>' + tmnData +'℃'+'/'+tmxData+'℃'+'</div>';
     }
     else if(skyData == 4){
-      viewText = viewText + '<img src = "many_clouds.jpg" alt="ERROR" width="150">';
-      var printWeather = viewText + '<div>' + tmnData +'℃'+'/'+tmxData+'℃'+'</div>';
+      viewText = viewText + '<img id = "w_info" src = "D://open_source//many_clouds.jpg" alt="ERROR" width="150">';
+      printWeather = viewText + '<div>' + tmnData +'℃'+'/'+tmxData+'℃'+'</div>';
     }
-    document.getElementById("weather").innerHTML=printWeather;
+    document.getElementById('weather').innerHTML=printWeather;
   }
   /*
   1. 날짜와 시간 불러오는 코드 만들기
