@@ -56,7 +56,7 @@ function weatherReport() {
     var d = new Date();
     var thisMonth = d.getMonth();
     var thisDate = d.getDate();
-    viewText = '<div>' + thisMonth + '/'+thisDate '</div>';
+    viewText = '<div>' + thisMonth + '/'+thisDate+'</div>';
     for(var i =0; i<data.length; i++){
       if((data[i].category == "SKY") && (data[i].fcstTime == 1200)){
         sktData = data[i].fcstValue;
@@ -237,7 +237,7 @@ xhr.onload = function() {
       if(path.title === "현충사"){
         overlaypage.innerHTML = '<iframe src="info_page.html" width="100%" height="600px" seamless></iframe';
       }else if(path.title === "광화문"){
-        overlaypage.innerHTML = '<iframe src="info_gwanghwamoon.html" width="80%" height="70%" seamless></iframe';
+        overlaypage.innerHTML = '<iframe src="info_gwanghwamoon.html" width="100%" height="600px" seamless></iframe';
       }
     }
   }
