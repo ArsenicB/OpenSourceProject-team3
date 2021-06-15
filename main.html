@@ -37,12 +37,12 @@
 
 						<select id="country" title="시/군/구 선택">
 
-							<option >:: 시/군/구 ::</option>
+							<option>:: 시/군/구 ::</option>
 
 						</select>
-
+						<input type="button" value="검색" onclick="areaSearch()" style="margin-left: 10px;">
 					</form>
-					<input type="button" value="검색" onclick="areaSearch()" style="margin-left: 160px;margin-top: 10px;">
+
 
 
 					<!-- 오버레이영역 -->
@@ -53,15 +53,15 @@
 						</div>
 					</div>
 
-					<div id = "weather"> </div>
+					<div id="weather"> </div>
 					<script>
-			function on() {
-			document.getElementById("overlay").style.display = "block";
-			}
+						function on() {
+							document.getElementById("overlay").style.display = "block";
+						}
 
-			function off() {
-			document.getElementById("overlay").style.display = "none";
-			}
+						function off() {
+							document.getElementById("overlay").style.display = "none";
+						}
 					</script>
 
 
@@ -88,17 +88,16 @@
 
 			function changeAreaList(element) {
 				url = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaCode'; /*URL*/
-				queryParams = '?' + encodeURIComponent('ServiceKey') + '='+'ZRfy9p2%2BFuGKbHgkMRtUyVkjPPq4pS1ukn3ZqPKeV7gsilRVx%2FBSnLrpy%2BanhAlTLlcJASqhuIosKtO5k5QzKg%3D%3D'; /*Service Key*/
+				queryParams = '?' + encodeURIComponent('ServiceKey') + '=' + 'ZRfy9p2%2BFuGKbHgkMRtUyVkjPPq4pS1ukn3ZqPKeV7gsilRVx%2FBSnLrpy%2BanhAlTLlcJASqhuIosKtO5k5QzKg%3D%3D'; /*Service Key*/
 				queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('30'); /**/
 				queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /**/
 				queryParams += '&' + encodeURIComponent('MobileOS') + '=' + encodeURIComponent('ETC'); /**/
 				queryParams += '&' + encodeURIComponent('MobileApp') + '=' + encodeURIComponent('AppTest'); /**/
 
-				if(element.name == '') {
+				if (element.name == '') {
 					index = '';
 					target = "city";
-				}
-				else{
+				} else {
 					index = String(element.value);
 					target = "country";
 					queryParams += '&' + encodeURIComponent('areaCode') + '=' + encodeURIComponent(index);
@@ -113,7 +112,7 @@
 			function loadDoc(element) {
 				xhr.onreadystatechange = function() {
 					if (this.readyState == 4) {
-					// api 호출이 완료되었을 경우
+						// api 호출이 완료되었을 경우
 						createList(element);
 					}
 				}
@@ -129,7 +128,7 @@
 
 				toObj = document.getElementById(target);
 
-				for(let i=0; i<x.length; i++) {
+				for (let i = 0; i < x.length; i++) {
 					option = document.createElement("option");
 					option.text = x[i].getElementsByTagName("name")[0].childNodes[0].nodeValue;
 					option.value = x[i].getElementsByTagName("code")[0].childNodes[0].nodeValue;
