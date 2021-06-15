@@ -251,14 +251,18 @@ function areaSearch() {
   var address;
   var sigungu;
   if (selectsigungu.selectedIndex === 0) {
-    address = selectarea.options[selectarea.selectedIndex].text;
+    if(selectarea.options[selectarea.selectedIndex].text === "광주"){
+      address = selectarea.options[selectarea.selectedIndex].text+"광역시";
+    }else{
+      address = selectarea.options[selectarea.selectedIndex].text;
+    }
     sigungu = 0;
-  } else {
+  }else {
     address = selectarea.options[selectarea.selectedIndex].text + selectsigungu.options[selectsigungu.selectedIndex].text;
     sigungu = selectsigungu.options[selectsigungu.selectedIndex].value;
   }
 
-
+alert(address);
   /*지도 중심좌표 변경*/
   var geocoder = new kakao.maps.services.Geocoder();
   geocoder.addressSearch(address, function(result, status) {
