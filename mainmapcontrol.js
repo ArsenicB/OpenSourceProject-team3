@@ -49,23 +49,39 @@ function weatherReport() {
   xhr.responseType = 'json';
   xhr.onload = function() {
     var data = xhr.response.response.body.items.item;
+    var skyData;
+    var tmnData;
+    var tmxData;
+    var viewText;
+    var d = new Date();
+    var thisMonth = d.getMonth();
+    var thisDate = d.getDate();
+    viewText = '<div>' + thisMonth + '/'+thisDate '</div>';
     for(var i =0; i<data.length; i++){
-      if(){
-        if(data[i].category == "SKY") {
-          var popData = data.body.items.item[i].fcstValue;
-        }
-        else if(data[i].category == "TMN"){
-          var leaveData = data.body.items.item[i].fcstValue;
-        }
-        else if(data[i].category == "TMX"){
-          var thisData = data.body.items.item[i].fcstValue;
-        }
+      if((data[i].category == "SKY") && (data[i].fcstTime == 1200)){
+        sktData = data[i].fcstValue;
       }
-      else{
-
+      else if(data[i].category == "TMN"){
+        tmnData = data[i].fcstValue;
       }
+      else if(data[i].category == "TMX"){
+        tmxData = data[i].fcstValue;
+      }
+    }
+    if(skyData == 1){
+      viewText = viewText + '<img src= "sunny.jpg">';
+      var printWeather = viewText + '<div>' + tmnData +'℃'+'/'+tmxData+'℃'+'</div>';
 
     }
+    else if(skyData == 3){
+      viewText = viewText + '<img src = "cloudy.jpg">';
+      var printWeather = viewText + '<div>' + tmnData +'℃'+'/'+tmxData+'℃'+'</div>';
+    }
+    else if(skyData == 4){
+      viewText = '<img src = "many_clouds.2FzTzQocDLJr05cb05qioRq3nUCYxAeeMu9BCBPvNaCWgLuLQAMLKlYRnwBJhjwCShKH0jqk8gnflbA">';
+      var printWeather = viewText + '<div>' + tmnData +'℃'+'/'+tmxData+'℃'+'</div>';
+    }
+    document.getElementById('weather').innerHTML=printWeather;
   }
   /*
   1. 날짜와 시간 불러오는 코드 만들기
