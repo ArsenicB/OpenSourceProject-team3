@@ -115,7 +115,8 @@ function tourapicall(lat, lon, map) {
       if(!(obj.item[i].title === "현충사")){
 				var markerData = {
 	        title: obj.item[i].title,
-	        latlng: new kakao.maps.LatLng(obj.item[i].mapy, obj.item[i].mapx)
+	        latlng: new kakao.maps.LatLng(obj.item[i].mapy, obj.item[i].mapx),
+          content: '<div style="padding:5px">' + obj.item[i].title + '<br>' + obj.item[i].addr1 + '</div>'
 	      };
 	      positions.push(markerData);
 			}
@@ -137,6 +138,24 @@ function tourapicall(lat, lon, map) {
         title: positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
         image: markerImage // 마커 이미지
       });
+      var infowindow = new kakao.maps.InfoWindow({
+        content: positions[i].content
+      });
+      kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+      kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+
+      //인포윈도우를 여는 함수
+      function makeOverListener(map, marker, infowindow) {
+        return function() {
+          infowindow.open(map, marker);
+        };
+      }
+      //인포윈도우를 닫는 함수
+      function makeOutListener(infowindow) {
+        return function() {
+          infowindow.close();
+        };
+      }
     }
 
   }
@@ -168,7 +187,8 @@ function rescall(lat, lon, map) {
       if(!(obj.item[i].title === "현충사")){
         var markerData = {
           title: obj.item[i].title,
-          latlng: new kakao.maps.LatLng(obj.item[i].mapy, obj.item[i].mapx)
+          latlng: new kakao.maps.LatLng(obj.item[i].mapy, obj.item[i].mapx),
+          content: '<div style="padding:5px">' + obj.item[i].title + '<br>' + obj.item[i].addr1 + '</div>'
         };
         positions.push(markerData);
       }
@@ -190,6 +210,24 @@ function rescall(lat, lon, map) {
         title: positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
         image: markerImage // 마커 이미지
       });
+      var infowindow = new kakao.maps.InfoWindow({
+        content: positions[i].content
+      });
+      kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+      kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+
+      //인포윈도우를 여는 함수
+      function makeOverListener(map, marker, infowindow) {
+        return function() {
+          infowindow.open(map, marker);
+        };
+      }
+      //인포윈도우를 닫는 함수
+      function makeOutListener(infowindow) {
+        return function() {
+          infowindow.close();
+        };
+      }
     }
 
   }
