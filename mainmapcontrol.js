@@ -32,7 +32,7 @@ function weatherReport(lat, lon) {
   var today = makeDate();
   var xhr = new XMLHttpRequest();
   var url = 'http://apis.data.go.kr/1360000/VilageFcstInfoService/getUltraSrtNcst'; /*URL*/
-  var queryParams = '?' + encodeURIComponent('ServiceKey') + '=' + '15DREnV4%2FzTzQocDLJr05cb05qioRq3nUCYxAeeMu9BCBPvNaCWgLuLQAMLKlYRnwBJhjwCShKH0jqk8gnflbA%3D%3D'; /*Service Key*/
+  var queryParams = '?' + encodeURIComponent('ServiceKey') + '=' + 'Qmxlp4pFKUj9NMkhZTxOAlYfvf2Jk%2BPbu3nT8soq5iibgzkV92lHdPtbQw0CVBy2qLBz3fxYUdRJkXlBCETe2g%3D%3D'; /*Service Key*/
   queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /**/
   queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('10'); /**/
   queryParams += '&' + encodeURIComponent('dataType') + '=' + encodeURIComponent('JSON'); /**/
