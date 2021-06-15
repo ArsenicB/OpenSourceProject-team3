@@ -234,7 +234,7 @@ function tourkeyword(keyword) {
         overlay.style.display = "block";
         var overlaypage = document.getElementById('overlaypage');
         if (path.title === "현충사") {
-          overlaypage.innerHTML = '<iframe src="info_page.html" width="100%" height="600px" seamless></iframe>';
+          overlaypage.innerHTML = '<iframe src="info_hyunchungsa.html" width="100%" height="600px" seamless></iframe>';
         } else if (path.title === "광화문") {
           overlaypage.innerHTML = '<iframe src="info_gwanghwamoon.html" width="100%" height="600px" seamless></iframe>';
         }
