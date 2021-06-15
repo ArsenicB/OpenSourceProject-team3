@@ -54,7 +54,7 @@ function weatherReport() {
     var tmxData;
     var viewText;
     var d = new Date();
-    var thisMonth = d.getMonth();
+    var thisMonth = d.getMonth()+1;
     var thisDate = d.getDate();
     viewText = '<div>' + thisMonth + '/'+thisDate+'</div>';
     for(var i =0; i<data.length; i++){
