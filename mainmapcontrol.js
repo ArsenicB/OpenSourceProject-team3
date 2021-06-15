@@ -12,7 +12,7 @@ if (navigator.geolocation) { //브라우저가 위치정보 제공을 지원할�
     var location = new kakao.maps.LatLng(lat, lon); //현재 위치의 좌표값을 가진 장소 지정
     map.setCenter(location);
     tourapicall(lat, lon)
-    weatherReport(lat, lon);
+    weatherReport(Math.floor(lat), Math.floor(lon));
   });
 } else {
   location = new kakao.maps.LatLng(33.450701, 126.570667);
@@ -24,7 +24,7 @@ kakao.maps.event.addListener(map, 'dragend', function() {
   var lat = latlng.getLat();
   var lon = latlng.getLng();
   tourapicall(lat, lon);
-  weatherReport(lat, lon);
+  weatherReport(Math.floor(lat), Math.floor(lon));
 });
 
 tourkeyword("광화문");
@@ -33,10 +33,10 @@ tourkeyword("현충사");
 function weatherReport(lat, lon) {
   var today = makeDate();
   var xhr = new XMLHttpRequest();
-  var url = 'http://apis.data.go.kr/1360000/VilageFcstInfoService/getUltraSrtNcst'; /*URL*/
-  var queryParams = '?' + encodeURIComponent('ServiceKey') + '=' + 'Qmxlp4pFKUj9NMkhZTxOAlYfvf2Jk%2BPbu3nT8soq5iibgzkV92lHdPtbQw0CVBy2qLBz3fxYUdRJkXlBCETe2g%3D%3D'; /*Service Key*/
+  var url = 'http://apis.data.go.kr/1360000/VilageFcstInfoService/getVilageFcst'; /*URL*/
+  var queryParams = '?' + encodeURIComponent('ServiceKey') + '='+'Qmxlp4pFKUj9NMkhZTxOAlYfvf2Jk%2BPbu3nT8soq5iibgzkV92lHdPtbQw0CVBy2qLBz3fxYUdRJkXlBCETe2g%3D%3D'; /*Service Key*/
   queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /**/
-  queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('10'); /**/
+  queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('1000'); /**/
   queryParams += '&' + encodeURIComponent('dataType') + '=' + encodeURIComponent('JSON'); /**/
   queryParams += '&' + encodeURIComponent('base_date') + '=' + today; /**/
   queryParams += '&' + encodeURIComponent('base_time') + '=' + encodeURIComponent('0500'); /**/
