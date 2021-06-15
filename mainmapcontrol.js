@@ -1,4 +1,3 @@
-
 var mapContainer = document.getElementById('map');
 var mapOption = {
   center: new kakao.maps.LatLng(33.450701, 126.570667), //지도 중심좌표
@@ -57,33 +56,29 @@ function weatherReport(lat, lon) {
     var thisMonth = d.getMonth();
     var thisDate = d.getDate();
     var printWeather;
-    viewText = '<div>' + thisMonth + '/'+thisDate+'</div>';
+    viewText = '<div>' + thisMonth + '/' + thisDate + '</div>';
     console.log(data);
-    for(var i =0; i<data.length; i++){
-      if((data[i].category == "SKY") && (data[i].fcstTime == 1200)){
+    for (var i = 0; i < data.length; i++) {
+      if ((data[i].category == "SKY") && (data[i].fcstTime == 1200)) {
         sktData = data[i].fcstValue;
-      }
-      else if(data[i].category == "TMN"){
+      } else if (data[i].category == "TMN") {
         tmnData = data[i].fcstValue;
-      }
-      else if(data[i].category == "TMX"){
+      } else if (data[i].category == "TMX") {
         tmxData = data[i].fcstValue;
       }
     }
-    if(skyData == 1){
+    if (skyData == 1) {
       viewText = viewText + '<img id = "w_info" src= "D://open_source//sunny.jpg" alt="ERROR" width="150">';
-      printWeather = viewText + '<div>' + tmnData +'℃'+'/'+tmxData+'℃'+'</div>';
+      printWeather = viewText + '<div>' + tmnData + '℃' + '/' + tmxData + '℃' + '</div>';
 
-    }
-    else if(skyData == 3){
+    } else if (skyData == 3) {
       viewText = viewText + '<img id = "w_info" src = "D://open_source//cloudy.jpg" alt="ERROR" width="150">';
-      printWeather = viewText + '<div>' + tmnData +'℃'+'/'+tmxData+'℃'+'</div>';
-    }
-    else if(skyData == 4){
+      printWeather = viewText + '<div>' + tmnData + '℃' + '/' + tmxData + '℃' + '</div>';
+    } else if (skyData == 4) {
       viewText = viewText + '<img id = "w_info" src = "D://open_source//many_clouds.jpg" alt="ERROR" width="150">';
-      printWeather = viewText + '<div>' + tmnData +'℃'+'/'+tmxData+'℃'+'</div>';
+      printWeather = viewText + '<div>' + tmnData + '℃' + '/' + tmxData + '℃' + '</div>';
     }
-    document.getElementById('weather').innerHTML=printWeather;
+    document.getElementById('weather').innerHTML = printWeather;
   }
   /*
   1. 날짜와 시간 불러오는 코드 만들기
@@ -134,12 +129,14 @@ function tourapicall(lat, lon) {
     var i = 0;
     var positions = new Array();
     while (i < obj.item.length) {
-      var markerData = {
-        title: obj.item[i].title,
-        latlng: new kakao.maps.LatLng(obj.item[i].mapy, obj.item[i].mapx),
-        content: '<div>' + obj.item[i].title +'<br>'+obj.item[i].addr1+ '</div>'
-      };
-      positions.push(markerData);
+      if ((!(obj.item[i].title === "현충사")) && (!(obj.item[i].title === "광화문"))) {
+        var markerData = {
+          title: obj.item[i].title,
+          latlng: new kakao.maps.LatLng(obj.item[i].mapy, obj.item[i].mapx),
+          content: '<div>' + obj.item[i].title + '<br>' + obj.item[i].addr1 + '</div>'
+        };
+        positions.push(markerData);
+      }
       i++;
     }
     var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
@@ -180,156 +177,43 @@ function tourapicall(lat, lon) {
     }
   }
 
-xhr.send('');
+  xhr.send('');
 }
 
-function tourkeyword(keyword){
+function tourkeyword(keyword) {
   var xhr = new XMLHttpRequest();
-var url = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/searchKeyword'; /*URL*/
-var queryParams = '?' + encodeURIComponent('ServiceKey') + '='+'Qmxlp4pFKUj9NMkhZTxOAlYfvf2Jk%2BPbu3nT8soq5iibgzkV92lHdPtbQw0CVBy2qLBz3fxYUdRJkXlBCETe2g%3D%3D'; /*Service Key*/
-queryParams += '&' + encodeURIComponent('MobileApp') + '=' + encodeURIComponent('AppTest'); /**/
-queryParams += '&' + encodeURIComponent('MobileOS') + '=' + encodeURIComponent('ETC'); /**/
-queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /**/
-queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('10'); /**/
-queryParams += '&' + encodeURIComponent('listYN') + '=' + encodeURIComponent('Y'); /**/
-queryParams += '&' + encodeURIComponent('arrange') + '=' + encodeURIComponent('A'); /**/
-queryParams += '&' + encodeURIComponent('contentTypeId') + '=' + encodeURIComponent('12'); /**/
-queryParams += '&' + encodeURIComponent('keyword') + '=' + encodeURIComponent(keyword); /**/
-queryParams += '&' + encodeURIComponent('_type') + '=' + encodeURIComponent('json'); /*JSON형태의 데이터로 호출*/
-xhr.open('GET', url + queryParams);
-xhr.responseType = 'json';
-xhr.onload = function() {
-  var path;
-  if(xhr.response.response.body.totalCount === 1){
-    path = xhr.response.response.body.items.item;
-  }else{
-    path = xhr.response.response.body.items.item[0];
-  }
-
-  var marker = new kakao.maps.Marker({
-    map: map, // 마커를 표시할 지도
-    position: new kakao.maps.LatLng(path.mapy, path.mapx), // 마커를 표시할 위치
-    title: path.title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
-  });
-  var infowindow = new kakao.maps.InfoWindow({
-    content: '<div>'+path.title+'<br>'+path.addr1+'</div>'
-  });
-  kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
-  kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
-  kakao.maps.event.addListener(marker, 'click', clickListner());
-
-  //인포윈도우를 여는 함수
-  function makeOverListener(map, marker, infowindow) {
-    return function() {
-      infowindow.open(map, marker);
-    };
-  }
-  //인포윈도우를 닫는 함수
-  function makeOutListener(infowindow) {
-    return function() {
-      infowindow.close();
-    };
-  }
-
-  function clickListner(){
-    return function() {
-      var overlay = document.getElementById('overlay');
-      overlay.style.display = "block";
-      var overlaypage = document.getElementById('overlaypage');
-      if(path.title === "현충사"){
-        overlaypage.innerHTML = '<iframe src="info_page.html" width="100%" height="600px" seamless></iframe';
-      }else if(path.title === "광화문"){
-        overlaypage.innerHTML = '<iframe src="info_gwanghwamoon.html" width="80%" height="70%" seamless></iframe';
-      }
+  var url = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/searchKeyword'; /*URL*/
+  var queryParams = '?' + encodeURIComponent('ServiceKey') + '=' + 'Qmxlp4pFKUj9NMkhZTxOAlYfvf2Jk%2BPbu3nT8soq5iibgzkV92lHdPtbQw0CVBy2qLBz3fxYUdRJkXlBCETe2g%3D%3D'; /*Service Key*/
+  queryParams += '&' + encodeURIComponent('MobileApp') + '=' + encodeURIComponent('AppTest'); /**/
+  queryParams += '&' + encodeURIComponent('MobileOS') + '=' + encodeURIComponent('ETC'); /**/
+  queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /**/
+  queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('10'); /**/
+  queryParams += '&' + encodeURIComponent('listYN') + '=' + encodeURIComponent('Y'); /**/
+  queryParams += '&' + encodeURIComponent('arrange') + '=' + encodeURIComponent('A'); /**/
+  queryParams += '&' + encodeURIComponent('contentTypeId') + '=' + encodeURIComponent('12'); /**/
+  queryParams += '&' + encodeURIComponent('keyword') + '=' + encodeURIComponent(keyword); /**/
+  queryParams += '&' + encodeURIComponent('_type') + '=' + encodeURIComponent('json'); /*JSON형태의 데이터로 호출*/
+  xhr.open('GET', url + queryParams);
+  xhr.responseType = 'json';
+  xhr.onload = function() {
+    var path;
+    if (xhr.response.response.body.totalCount === 1) {
+      path = xhr.response.response.body.items.item;
+    } else {
+      path = xhr.response.response.body.items.item[0];
     }
-  }
-};
 
-xhr.send('');
-}
-
-function areaSearch() {
-  var selectarea = document.getElementById('city');
-  var selectsigungu = document.getElementById('country');
-  var address;
-  var sigungu;
-  if(selectsigungu.selectedIndex === 0){
-    address = selectarea.options[selectarea.selectedIndex].text;
-    sigungu = 0;
-  }else{
-    address = selectarea.options[selectarea.selectedIndex].text+selectsigungu.options[selectsigungu.selectedIndex].text;
-    sigungu = selectsigungu.options[selectsigungu.selectedIndex].value;
-  }
-
-
-  /*지도 중심좌표 변경*/
-  var geocoder = new kakao.maps.services.Geocoder();
-  geocoder.addressSearch(address, function(result, status) {
-    if (status === kakao.maps.services.Status.OK) {
-      var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-      map.setCenter(coords);
-    }
-  });
-areaapicall(selectarea.options[selectarea.selectedIndex].value,sigungu);
-map.setLevel(8);
-
-}
-
-function areaapicall(area, sigungu){
-  var xhr = new XMLHttpRequest();
-var url = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList'; /*URL*/
-var queryParams = '?' + encodeURIComponent('ServiceKey') + '='+'Qmxlp4pFKUj9NMkhZTxOAlYfvf2Jk%2BPbu3nT8soq5iibgzkV92lHdPtbQw0CVBy2qLBz3fxYUdRJkXlBCETe2g%3D%3D'; /*Service Key*/
-queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /**/
-queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('4000'); /**/
-queryParams += '&' + encodeURIComponent('MobileApp') + '=' + encodeURIComponent('AppTest'); /**/
-queryParams += '&' + encodeURIComponent('MobileOS') + '=' + encodeURIComponent('ETC'); /**/
-queryParams += '&' + encodeURIComponent('arrange') + '=' + encodeURIComponent('A'); /**/
-queryParams += '&' + encodeURIComponent('contentTypeId') + '=' + encodeURIComponent('12'); /**/
-queryParams += '&' + encodeURIComponent('areaCode') + '=' + area; /**/
-if(!(sigungu === 0)){
-  queryParams += '&' + encodeURIComponent('sigunguCode') + '=' + sigungu; /**/
-}
-queryParams += '&' + encodeURIComponent('listYN') + '=' + encodeURIComponent('Y'); /**/
-queryParams += '&' + encodeURIComponent('_type') + '=' + encodeURIComponent('json'); /*JSON형태의 데이터로 호출*/
-xhr.open('GET', url + queryParams);
-xhr.responseType = 'json';
-xhr.onload = function() {
-  var obj = xhr.response.response.body.items;
-  var i = 0;
-  var positions = new Array();
-  while (i < obj.item.length) {
-    if((!(obj.item[i].title === "현충사"))&&(!(obj.item[i].title === "광화문"))){
-    var markerData = {
-      title: obj.item[i].title,
-      latlng: new kakao.maps.LatLng(obj.item[i].mapy, obj.item[i].mapx),
-      content: '<div style="padding:5px">' + obj.item[i].title +'<br>'+obj.item[i].addr1+ '</div>'
-    };
-    positions.push(markerData);
-  }
-    i++;
-  }
-  var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
-
-  for (var i = 0; i < positions.length; i++) {
-
-    // 마커 이미지의 이미지 크기 입니다
-    var imageSize = new kakao.maps.Size(24, 35);
-
-    // 마커 이미지를 생성합니다
-    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
-
-    // 마커를 생성합니다
     var marker = new kakao.maps.Marker({
       map: map, // 마커를 표시할 지도
-      position: positions[i].latlng, // 마커를 표시할 위치
-      title: positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
-      image: markerImage // 마커 이미지
+      position: new kakao.maps.LatLng(path.mapy, path.mapx), // 마커를 표시할 위치
+      title: path.title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
     });
     var infowindow = new kakao.maps.InfoWindow({
-      content: positions[i].content
+      content: '<div>' + path.title + '<br>' + path.addr1 + '</div>'
     });
     kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
     kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+    kakao.maps.event.addListener(marker, 'click', clickListner());
 
     //인포윈도우를 여는 함수
     function makeOverListener(map, marker, infowindow) {
@@ -343,8 +227,121 @@ xhr.onload = function() {
         infowindow.close();
       };
     }
-  }
+
+    function clickListner() {
+      return function() {
+        var overlay = document.getElementById('overlay');
+        overlay.style.display = "block";
+        var overlaypage = document.getElementById('overlaypage');
+        if (path.title === "현충사") {
+          overlaypage.innerHTML = '<iframe src="info_page.html" width="100%" height="600px" seamless></iframe';
+        } else if (path.title === "광화문") {
+          overlaypage.innerHTML = '<iframe src="info_gwanghwamoon.html" width="80%" height="70%" seamless></iframe';
+        }
+      }
+    }
+  };
+
+  xhr.send('');
 }
 
-xhr.send('');
+function areaSearch() {
+  var selectarea = document.getElementById('city');
+  var selectsigungu = document.getElementById('country');
+  var address;
+  var sigungu;
+  if (selectsigungu.selectedIndex === 0) {
+    address = selectarea.options[selectarea.selectedIndex].text;
+    sigungu = 0;
+  } else {
+    address = selectarea.options[selectarea.selectedIndex].text + selectsigungu.options[selectsigungu.selectedIndex].text;
+    sigungu = selectsigungu.options[selectsigungu.selectedIndex].value;
+  }
+
+
+  /*지도 중심좌표 변경*/
+  var geocoder = new kakao.maps.services.Geocoder();
+  geocoder.addressSearch(address, function(result, status) {
+    if (status === kakao.maps.services.Status.OK) {
+      var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+      map.setCenter(coords);
+    }
+  });
+  areaapicall(selectarea.options[selectarea.selectedIndex].value, sigungu);
+  map.setLevel(8);
+
+}
+
+function areaapicall(area, sigungu) {
+  var xhr = new XMLHttpRequest();
+  var url = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList'; /*URL*/
+  var queryParams = '?' + encodeURIComponent('ServiceKey') + '=' + 'Qmxlp4pFKUj9NMkhZTxOAlYfvf2Jk%2BPbu3nT8soq5iibgzkV92lHdPtbQw0CVBy2qLBz3fxYUdRJkXlBCETe2g%3D%3D'; /*Service Key*/
+  queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /**/
+  queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('4000'); /**/
+  queryParams += '&' + encodeURIComponent('MobileApp') + '=' + encodeURIComponent('AppTest'); /**/
+  queryParams += '&' + encodeURIComponent('MobileOS') + '=' + encodeURIComponent('ETC'); /**/
+  queryParams += '&' + encodeURIComponent('arrange') + '=' + encodeURIComponent('A'); /**/
+  queryParams += '&' + encodeURIComponent('contentTypeId') + '=' + encodeURIComponent('12'); /**/
+  queryParams += '&' + encodeURIComponent('areaCode') + '=' + area; /**/
+  if (!(sigungu === 0)) {
+    queryParams += '&' + encodeURIComponent('sigunguCode') + '=' + sigungu; /**/
+  }
+  queryParams += '&' + encodeURIComponent('listYN') + '=' + encodeURIComponent('Y'); /**/
+  queryParams += '&' + encodeURIComponent('_type') + '=' + encodeURIComponent('json'); /*JSON형태의 데이터로 호출*/
+  xhr.open('GET', url + queryParams);
+  xhr.responseType = 'json';
+  xhr.onload = function() {
+    var obj = xhr.response.response.body.items;
+    var i = 0;
+    var positions = new Array();
+    while (i < obj.item.length) {
+      if ((!(obj.item[i].title === "현충사")) && (!(obj.item[i].title === "광화문"))) {
+        var markerData = {
+          title: obj.item[i].title,
+          latlng: new kakao.maps.LatLng(obj.item[i].mapy, obj.item[i].mapx),
+          content: '<div style="padding:5px">' + obj.item[i].title + '<br>' + obj.item[i].addr1 + '</div>'
+        };
+        positions.push(markerData);
+      }
+      i++;
+    }
+    var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+
+    for (var i = 0; i < positions.length; i++) {
+
+      // 마커 이미지의 이미지 크기 입니다
+      var imageSize = new kakao.maps.Size(24, 35);
+
+      // 마커 이미지를 생성합니다
+      var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+
+      // 마커를 생성합니다
+      var marker = new kakao.maps.Marker({
+        map: map, // 마커를 표시할 지도
+        position: positions[i].latlng, // 마커를 표시할 위치
+        title: positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+        image: markerImage // 마커 이미지
+      });
+      var infowindow = new kakao.maps.InfoWindow({
+        content: positions[i].content
+      });
+      kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+      kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+
+      //인포윈도우를 여는 함수
+      function makeOverListener(map, marker, infowindow) {
+        return function() {
+          infowindow.open(map, marker);
+        };
+      }
+      //인포윈도우를 닫는 함수
+      function makeOutListener(infowindow) {
+        return function() {
+          infowindow.close();
+        };
+      }
+    }
+  }
+
+  xhr.send('');
 }
