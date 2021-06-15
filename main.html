@@ -5,10 +5,11 @@
 		<meta charset="UTF-8">
 		<title>main page</title>
 		<link rel="stylesheet" type="text/css" href="main_css.css">
-		<!--카카오맵 API 호출-->
-		<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=23256411488e7efe828c636cc4c08115"></script>
+
 		<!-- services 라이브러리 불러오기 -->
 		<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=23256411488e7efe828c636cc4c08115&libraries=services"></script>
+		<!--카카오맵 API 호출-->
+		<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=23256411488e7efe828c636cc4c08115"></script>
 
 
 	</head>
@@ -42,14 +43,14 @@
 						</select>
 
 					</form>
-					<input type="button" value="검색">
+					<input type="button" value="검색" onclick="areaSearch()">
 
 
 					<!-- 오버레이영역 -->
 
 					<div id="overlay" onclick="off()">
 						<div id="overlaypage" style="padding:100px">
-							
+
 						</div>
 					</div>
 
